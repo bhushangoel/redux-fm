@@ -5,17 +5,11 @@ import {
   bindActionCreators
 } from "redux";
 
+// original state of the application
 const initialState = { value: 0 };
 
 const INCREMENT = "INCREMENT";
 const ADD = "ADD";
-
-// action
-// const incrementAction = { type: INCREMENT, payload: 5 };
-// OR
-//actionCreator
-const increment = () => ({ type: "INCREMENT" });
-const add = (amount) => ({ type: "ADD", payload: amount });
 
 // reducer function
 const reducer = (state = initialState, action) => {
@@ -27,8 +21,17 @@ const reducer = (state = initialState, action) => {
   }
 };
 
+// store created using createStore method
 const store = createStore(reducer);
 
+// action object
+// const incrementAction = { type: INCREMENT, payload: 5 };
+// OR
+//actionCreator functions
+const increment = () => ({ type: INCREMENT });
+const add = (amount) => ({ type: ADD, payload: amount });
+
+// dispatching actions
 store.dispatch(increment());
 store.dispatch(add(4));
 
