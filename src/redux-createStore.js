@@ -31,8 +31,12 @@ const store = createStore(reducer);
 const increment = () => ({ type: INCREMENT });
 const add = (amount) => ({ type: ADD, payload: amount });
 
+// subscribing to the state changes
+const subscriber = () => console.log("SUBSCRIBER : ", store.getState());
+store.subscribe(subscriber);
+
 // dispatching actions
 store.dispatch(increment());
 store.dispatch(add(4));
 
-console.log(store.getState());
+// console.log(store.getState());
