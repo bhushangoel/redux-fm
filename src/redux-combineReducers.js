@@ -2,7 +2,8 @@ import {
   createStore,
   compose,
   applyMiddleware,
-  bindActionCreators
+  bindActionCreators,
+  combineReducers
 } from "redux";
 
 // setting up initial state
@@ -24,22 +25,42 @@ const ADD_TASK = "ADD_TASK";
 const addTask = (title) => ({ type: ADD_TASK, payload: { title } });
 const addUser = (name) => ({ type: ADD_USER, payload: { name } });
 
-// reducer function
-const reducer = (state = initialState, action) => {
+// SPLITTING UP REDUCER INTO SMALLER REDUCER FUNCTIONS
+// user reducer function
+const userReducer = (users = initialState.users, action) => {
   if (action.type === ADD_USER) {
-    return {
-      ...state,
-      users: [...state.users, action.payload]
-    };
+    return [...users, action.payload];
   }
-
-  if (action.type === ADD_TASK) {
-    return {
-      ...state,
-      tasks: [...state.tasks, action.payload]
-    };
-  }
+  return users;
 };
+
+// task reducer
+const taskReducer = (tasks = initialState.tasks, action) => {
+  if (action.type === ADD_TASK) {
+    return [...tasks, action.payload];
+  }
+  return tasks;
+};
+
+// reducer function
+// const reducer = (state = initialState, action) => {
+//   if (action.type === ADD_USER) {
+//     return {
+//       ...state,
+//       users: [...state.users, action.payload]
+//     };
+//   }
+
+//   if (action.type === ADD_TASK) {
+//     return {
+//       ...state,
+//       tasks: [...state.tasks, action.payload]
+//     };
+//   }
+// };
+
+// using combineReducer
+const reducer = combineReducers({ users: userReducer, tasks: taskReducer });
 
 // creating store
 const store = createStore(reducer, initialState);
